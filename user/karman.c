@@ -15,7 +15,6 @@ advect the passive tracer *f*. */
 
 #include "embed.h"
 #include "navier-stokes/centered.h"
-// #include "navier-stokes/perfs.h"
 #include "tracer.h"
 
 scalar f[];
