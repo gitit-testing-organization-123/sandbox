@@ -5,4 +5,4 @@ project(basilisk-sandbox-user
 find_package(basilisk CONFIG REQUIRED)
 include(CTest)
 
-basilisk_add_ctest(user.karman SOURCE karman.c) 
+basilisk_add_ctest(karman SOURCE karman.c) 
