@@ -1,0 +1,6 @@
+.direnv/
+build/
+result
+*.tags
+.envrc
+flake*
