@@ -120,3 +120,28 @@ jobs:
           path: build/sandbox
           if-no-files-found: error
           retention-days: 7
+
+      - name: Dispatch wiki artifact refresh
+        if: >-
+          ${{
+            always() &&
+            github.repository == 'gitit-testing-organization-123/sandbox' &&
+            github.event_name != 'pull_request'
+          }}
+        env:
+          GH_TOKEN: ${{ secrets.WIKI_REPO_DISPATCH_TOKEN }}
+          TARGET_REPO: gitit-testing-organization-123/wiki
+        run: |
+          set -euo pipefail
+          if [[ -z "${GH_TOKEN}" ]]; then
+            echo "::error::WIKI_REPO_DISPATCH_TOKEN is required to dispatch the wiki artifact refresh."
+            exit 1
+          fi
+          gh api "repos/${TARGET_REPO}/dispatches" \
+            --method POST \
+            --field event_type=sandbox-artifacts-ready \
+            --field client_payload[source_repo]="${{ github.repository }}" \
+            --field client_payload[run_id]="${{ github.run_id }}" \
+            --field client_payload[sha]="${{ github.sha }}" \
+            --field client_payload[artifact_scope]="sandbox" \
+            --field client_payload[artifact_name]="sandbox-build-artifacts"
