@@ -4,4 +4,6 @@ project(basilisk-sandbox
   LANGUAGES C CXX
 ) 
 
+include(CTest)
+
 add_subdirectory(user)
